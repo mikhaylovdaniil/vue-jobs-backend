@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from sqlmodel import SQLModel, create_engine
 
-from models import JobsInsert, JobsSelect
+from models import JobsInsert, JobsSelect, JobsUpdate
 from service import Job
 
 app = FastAPI()
@@ -40,8 +40,8 @@ def post_job(data: JobsInsert):
     return job_id
 
 
-@app.put("/jobs/{job_id}")
-def put_job(job_id: int, data: dict):
+@app.put("/jobs/{job_id}", response_model=JobsSelect)
+def put_job(job_id: int, data: JobsUpdate):
     updated_job = job.update_job(job_id, data)
     if updated_job is None:
         raise HTTPException(400, "Job not updated")

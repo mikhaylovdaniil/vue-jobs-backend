@@ -1,6 +1,6 @@
 from sqlmodel import Session, select
 
-from models import Jobs, JobsInsert, JobsSelect
+from models import Jobs, JobsInsert, JobsSelect, JobsUpdate
 
 
 class Job:
@@ -63,8 +63,22 @@ class Job:
 
         return jobRow.id
 
-    def update_job(self, job_id: int, job: dict):
-        pass  # TODO: update job in db
+    def update_job(self, job_id: int, job: JobsUpdate):
+        stm = select(Jobs).where(Jobs.id == job_id)
+        updated_job = self.session.exec(stm).first()
+
+        if updated_job is None:
+            return None
+
+        # Updating only not None attrs
+        for name, value in job.__dict__.items():
+            if value is not None:
+                setattr(updated_job, name, value)
+
+        self.session.add(updated_job)
+        self.session.commit()
+
+        return updated_job
 
     def remove_job(self, job_id: int):
         pass  # TODO: delete job from db

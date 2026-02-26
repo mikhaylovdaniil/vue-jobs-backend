@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -40,3 +42,11 @@ class JobsInsert(SQLModel):
     location: str
     description: str
     salary: str
+
+
+class JobsUpdate(SQLModel):
+    title: str | None = Field(default=None)
+    type: str | None = Field(default=None)
+    location: str | None = Field(default=None)
+    description: str | None = Field(default=None)
+    salary: str | None = Field(default=None)
