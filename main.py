@@ -50,7 +50,7 @@ def put_job(job_id: int, data: JobsUpdate):
 
 @app.delete("/jobs/{job_id}")
 def delete_job(job_id: int):
-    deleted_job = job.remove_job(job_id)
-    if deleted_job is None:
+    deleted_id = job.remove_job(job_id)
+    if deleted_id is None:
         raise HTTPException(400, "Job not deleted")
-    return deleted_job
+    return deleted_id

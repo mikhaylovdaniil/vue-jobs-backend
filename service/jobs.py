@@ -81,4 +81,13 @@ class Job:
         return updated_job
 
     def remove_job(self, job_id: int):
-        pass  # TODO: delete job from db
+        stm = select(Jobs).where(Jobs.id == job_id)
+        result = self.session.exec(stm).first()
+
+        if result is None:
+            return None
+
+        self.session.delete(result)
+        self.session.commit()
+
+        return job_id
