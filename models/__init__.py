@@ -1,3 +1,3 @@
-from .common import Companies, Jobs, JobsSelect
+from .common import Companies, Jobs, JobsInsert, JobsSelect
 
-__all__ = ["Jobs", "JobsSelect", "Companies"]
+__all__ = ["Jobs", "JobsSelect", "JobsInsert", "Companies"]

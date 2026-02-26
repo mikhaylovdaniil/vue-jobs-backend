@@ -32,3 +32,11 @@ class JobsSelect(SQLModel):
     salary: str
 
     company: Companies | None = Field(default=None)
+
+
+class JobsInsert(SQLModel):
+    title: str
+    type: str
+    location: str
+    description: str
+    salary: str

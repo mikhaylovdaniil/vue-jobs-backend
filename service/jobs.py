@@ -1,6 +1,6 @@
 from sqlmodel import Session, select
 
-from models import Jobs, JobsSelect
+from models import Jobs, JobsInsert, JobsSelect
 
 
 class Job:
@@ -49,8 +49,19 @@ class Job:
             company=result.company,
         )
 
-    def create_job(self, job: dict):
-        pass  # TODO: insert job into db
+    def create_job(self, job: JobsInsert):
+        jobRow = Jobs(
+            title=job.title,
+            type=job.type,
+            location=job.location,
+            description=job.description,
+            salary=job.salary,
+        )
+
+        self.session.add(jobRow)
+        self.session.commit()
+
+        return jobRow.id
 
     def update_job(self, job_id: int, job: dict):
         pass  # TODO: update job in db
