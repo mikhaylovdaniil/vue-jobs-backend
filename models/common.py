@@ -21,3 +21,14 @@ class Jobs(SQLModel, table=True):
 
     company_id: int | None = Field(default=None, foreign_key="companies.id")
     company: Companies | None = Relationship(back_populates="jobs")
+
+
+class JobsSelect(SQLModel):
+    id: int | None = Field(default=None)
+    title: str
+    type: str
+    location: str
+    description: str
+    salary: str
+
+    company: Companies | None = Field(default=None)

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from sqlmodel import SQLModel, create_engine
 
-from models import Jobs
+from models import JobsSelect
 from service import Job
 
 app = FastAPI()
@@ -13,7 +13,7 @@ job = Job(engine)
 SQLModel.metadata.create_all(engine)
 
 
-@app.get("/jobs", response_model=list[Jobs])
+@app.get("/jobs", response_model=list[JobsSelect])
 def get_jobs(start: int | None = None, end: int | None = None):
     if start is not None and end is not None:
         return job.select_jobs(start, end)
@@ -24,7 +24,7 @@ def get_jobs(start: int | None = None, end: int | None = None):
     return job.select_jobs()
 
 
-@app.get("/jobs/{job_id}")
+@app.get("/jobs/{job_id}", response_model=JobsSelect)
 def get_job(job_id: int):
     result = job.select_job(job_id)
     if result is None:
